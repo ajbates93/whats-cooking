@@ -7,8 +7,8 @@ const { dayTitle } = defineProps<Props>()
 </script>
 
 <template>
-  <div>
-    <div class="title">{{ dayTitle }}</div>
+  <div class="shadow rounded-lg p-5 bg-white border-2 border-primary border-opacity-30">
+    <div class="title text-xl font-bold">{{ dayTitle }}</div>
     <div>Breakfast</div>
     <div>...</div>
     <div>Lunch</div>
