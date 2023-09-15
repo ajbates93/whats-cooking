@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onKeyStroke } from '@vueuse/core'
 import type { Meal, Day } from '@/types'
 type Props = {
   day: Day,
@@ -14,7 +15,7 @@ const showInput = ref(false)
 
 const newMealTitle = ref("")
 
-const handleAddNewMealClick = () => {
+const handleSubmitNewMealClick = () => {
   showInput.value = showEdit.value = false
   emit('addMeal', newMealTitle.value)
 }
@@ -25,6 +26,13 @@ const handleSubmitEditMealClick = () => {
     emit('addMeal', props.meal.name)
   }
 }
+
+onKeyStroke('Enter', () => {
+  if (showInput.value && !showEdit.value)
+    handleSubmitNewMealClick()
+  if (showEdit.value && !showInput.value)
+    handleSubmitEditMealClick()
+})
 
 </script>
 
@@ -40,7 +48,7 @@ const handleSubmitEditMealClick = () => {
     <div class="flex items-center justify-between" v-else>
       <button v-if="!showInput" class="bg-gray-400 text-white px-2 py-1 rounded" @click="showInput = true">Add Meal</button>
       <input v-if="showInput" class="bg-white px-2 py-1 border rounded border-primary border-opacity-40" type="text" v-model="newMealTitle" />
-      <button v-if="showInput" class="bg-green-500 text-white px-2 py-1 rounded" @click="handleAddNewMealClick">Submit</button>
+      <button v-if="showInput" class="bg-green-500 text-white px-2 py-1 rounded" @click="handleSubmitNewMealClick">Submit</button>
     </div>
   </div>
 </template>
