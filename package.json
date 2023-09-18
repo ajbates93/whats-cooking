@@ -18,5 +18,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "test": "vitest"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.4.11"
   }
 }

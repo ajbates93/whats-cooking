@@ -1,16 +1,19 @@
 <script setup lang="ts">
+import { useStore } from '@/store'
 
-const daysToShow = ref<number>(7)
+const store = useStore()
 
 const calendarDays = computed(() => {
   const today = new Date()
-  return Array.from({ length: daysToShow.value }, (_, i) => {
+  return Array.from({ length: store.calendarDaysToShow}, (_, i) => {
     const day = new Date(today)
     if (i > 0)
       day.setDate(today.getDate() + i)
     return day
   })
 })
+
+onBeforeMount(() => store.seedMeals())
 
 </script>
 
@@ -20,7 +23,7 @@ const calendarDays = computed(() => {
     <div class="max-w-screen-xl mx-auto">
       <div class="my-5 font-bold text-lg">
         <span class="mr-2">Days: </span>
-        <select v-model="daysToShow" class="px-3 py-2 border border-primary border-opacity-30 rounded-lg min-w-[100px]">
+        <select v-model="store.calendarDaysToShow" class="px-3 py-2 border border-primary border-opacity-30 rounded-lg min-w-[100px]">
           <option>5</option>
           <option selected>7</option>
           <option>10</option>
@@ -28,7 +31,7 @@ const calendarDays = computed(() => {
         </select>
       </div>
       <div class="grid grid-cols-3 gap-5">
-        <DayCard v-for="day in calendarDays" :day-title="day.toLocaleDateString('en-UK', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'})"></DayCard>
+        <DayCard v-for="day in calendarDays" :day-date="day" :day-title="day.toLocaleDateString('en-UK', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'})"></DayCard>
       </div>
     </div>
   </div>
