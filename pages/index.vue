@@ -25,8 +25,8 @@ onBeforeMount(() => store.seedMeals())
       <div class="my-5 font-bold text-lg">
         <span class="mr-2">Days: </span>
         <select v-model="store.calendarDaysToShow" class="px-3 py-2 border border-primary border-opacity-30 rounded-lg min-w-[100px]">
-          <option>5</option>
-          <option selected>7</option>
+          <option selected>5</option>
+          <option>7</option>
           <option>10</option>
           <option>14</option>
         </select>

@@ -1,9 +1,12 @@
 import { defineStore } from 'pinia'
-import { MealType, type Meal } from '@/types'
+import { MealType, type Meal, XY } from '@/types'
 export const useStore = defineStore('store', {
   state: () => ({
-    calendarDaysToShow: 7,
-    meals: [] as Meal[]
+    calendarDaysToShow: 5,
+    meals: [] as Meal[],
+    droppedValue: {} as XY,
+    draggedMeal: {} as Meal,
+    droppedMeal: {} as Meal
   }),
   getters: {
   },
@@ -15,6 +18,19 @@ export const useStore = defineStore('store', {
         this.meals[exists] = meal
       else
         this.meals.push(meal)
+    },
+    swapMeals(draggedMeal: Meal, targetMeal: Meal) {
+      const draggedIdx = this.meals.findIndex(x => x.date.toLocaleDateString() === draggedMeal.date.toLocaleDateString() && x.type === draggedMeal.type)
+      const targetIdx = this.meals.findIndex(x => x.date.toLocaleDateString() === targetMeal.date.toLocaleDateString() && x.type === targetMeal.type)
+
+      if (draggedIdx === -1 || targetIdx === -1)
+        return
+
+      const temp = JSON.parse(JSON.stringify(this.meals[draggedIdx]))
+      this.meals[draggedIdx].name = this.meals[targetIdx].name
+      this.meals[draggedIdx].missingIngredients = this.meals[targetIdx].missingIngredients
+      this.meals[targetIdx].name = temp.name
+      this.meals[targetIdx].missingIngredients = temp.missingIngredients
     },
     seedMeals() {
       const today = new Date()

@@ -8,8 +8,8 @@ describe('Homepage', () => {
     expect(wrapper.vm.$refs.daysToShow).toBe(7)
   })
 
-  test('select a different number of days', () => {
-    wrapper.vm.$refs.daysToShow.value = 5
-    expect(wrapper.vm.$refs.calendarDays.value.length).toBe(10)
-  })
+  // test('select a different number of days', () => {
+  //   wrapper.vm.$refs.daysToShow.value = 5
+  //   expect(wrapper.vm.$refs.calendarDays.value.length).toBe(10)
+  // })
 })

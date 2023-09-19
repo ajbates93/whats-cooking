@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onKeyStroke } from '@vueuse/core'
+import { onKeyStroke, useDropZone } from '@vueuse/core'
+import { useDragAndDrop } from '@/composables/useDragAndDrop'
 import type { Meal, Day } from '@/types'
 import { useStore } from '@/store'
 type Props = {
@@ -12,6 +13,7 @@ const emit = defineEmits<{
 }>()
 const store = useStore()
 
+const { dragMeal, getMealPositions } = useDragAndDrop()
 const drag = ref<HTMLElement | null>(null)
 
 const showEdit = ref(false)
@@ -38,13 +40,36 @@ onKeyStroke('Enter', () => {
     handleSubmitEditMealClick()
 })
 
+const { x, y, isDragging } = dragMeal(drag)
+const { x: xBounding, y: yBounding } = getMealPositions(drag)
+
+const isDropped = computed(() => {
+  const current = store.droppedValue
+
+  return (current.x >= xBounding.value - 20 && current.x <= xBounding.value + 20
+    && current.y >= yBounding.value - 20 && current.y <= yBounding.value + 20) 
+})
+
+watch(isDragging, () => {
+  if (isDragging && props.meal) {
+    store.draggedMeal = props.meal
+  }
+})
+watch(isDropped, () => {
+  if (isDropped.value && props.meal) {
+    store.droppedMeal = props.meal
+  }
+  store.swapMeals(store.draggedMeal, store.droppedMeal) 
+})
+
 </script>
 
 <template>
-  <div class="my-3 transition py-2 px-2 cursor-move rounded hover:shadow-lg border select-none touch-none bg-white"
-    >
+  <div ref="drag" class="my-3 transition py-2 px-2 cursor-move rounded hover:shadow-lg border select-none touch-none bg-white"
+    :style="[isDragging ? `position: absolute; left: ${x.toFixed(0)}px; top: ${y.toFixed(0)}px;` : 'position: relative',
+            isDropped ? 'background-color: green' : '']">
     <div v-if="meal" class="flex items-center justify-between">
-      <span v-if="!showEdit" class="mr-auto">{{ meal.name }}</span>
+      <span v-if="!showEdit" class="mr-auto">{{ meal.name }} x: {{ x.toFixed(2) }}, y: {{ y.toFixed(2) }}</span>
       <button v-if="!showEdit" class="bg-gray-400 text-white px-2 py-1 rounded" @click="showEdit = true">Change</button>
       <input v-if="showEdit" class="bg-white border border-primary border-opacity-40 px-2 py-1 rounded" type="text" v-model="meal.name" />
       <button v-if="showEdit" class="bg-gray-400 text-white px-2 py-1 rounded ml-auto mr-1" @click="showEdit = false">Cancel</button>

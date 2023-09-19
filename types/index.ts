@@ -3,8 +3,12 @@ export enum MealType {
   Lunch,
   Dinner
 }
+export type XY = {
+  x: number,
+  y: number
+}
 export type Meal = {
-  name: string
+  name: string,
   type: MealType,
   date: Date,
   missingIngredients?: string[]

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useStore } from '@/store'
 import { Day, MealType, Meal } from '@/types'
-import { useDragAndDrop } from '@/composables/useDragAndDrop'
 
 type Props = {
   dayTitle: string,
