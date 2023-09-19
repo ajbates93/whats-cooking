@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onKeyStroke } from '@vueuse/core'
 import type { Meal, Day } from '@/types'
+import { useStore } from '@/store'
 type Props = {
   day: Day,
   meal?: Meal | null
@@ -9,6 +10,9 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   addMeal: [mealTitle: string]
 }>()
+const store = useStore()
+
+const drag = ref<HTMLElement | null>(null)
 
 const showEdit = ref(false)
 const showInput = ref(false)
@@ -37,7 +41,8 @@ onKeyStroke('Enter', () => {
 </script>
 
 <template>
-  <div class="my-3">
+  <div class="my-3 transition py-2 px-2 cursor-move rounded hover:shadow-lg border select-none touch-none bg-white"
+    >
     <div v-if="meal" class="flex items-center justify-between">
       <span v-if="!showEdit" class="mr-auto">{{ meal.name }}</span>
       <button v-if="!showEdit" class="bg-gray-400 text-white px-2 py-1 rounded" @click="showEdit = true">Change</button>

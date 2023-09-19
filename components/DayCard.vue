@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import { useStore } from '@/store'
 import { Day, MealType, Meal } from '@/types'
+import { useDragAndDrop } from '@/composables/useDragAndDrop'
+
 type Props = {
   dayTitle: string,
   dayDate: Date
 }
+
 const { dayTitle, dayDate } = defineProps<Props>()
+
 const store = useStore()
+
 const day = reactive<Day>({
   id: 0,
   date: dayDate,
@@ -14,10 +19,14 @@ const day = reactive<Day>({
   lunch: undefined,
   dinner: undefined
 })
+const breakfast = ref<HTMLDivElement>()
+const lunch = ref<HTMLDivElement | null>(null)
+const dinner = ref<HTMLDivElement | null>(null)
+
 const findMealsForDay = () => {
   const meals = store.meals.filter(x => x.date.toLocaleDateString() === dayDate.toLocaleDateString()) 
   if (meals.length > 0) {
-    meals.forEach(x => {
+    meals.forEach((x, idx) => {
       switch (x.type) {
         case MealType.Breakfast:
           day.breakfast = x
@@ -38,7 +47,7 @@ const addMeal = (mealType: MealType, mealTitle: string, date?: Date) => {
   const meal: Meal = {
     name: mealTitle,
     type: mealType,
-    date: date ? date : dayDate
+    date: date || dayDate
   }
   store.addMeal(meal)
 }
@@ -59,7 +68,7 @@ onMounted(() => {
         Breakfast
         <Icon v-if="day.breakfast" name="carbon:checkbox-checked-filled" class="text-green-500" size="1.5rem"/>
       </div>
-      <div ref="area1" class="area">
+      <div ref="breakfast" class="area">
         <DayMeal :day="day" :meal="day.breakfast ?? null" @addMeal="(mealTitle: string) => addMeal(MealType.Breakfast, mealTitle)" />
       </div>
     </div>
@@ -68,14 +77,18 @@ onMounted(() => {
         Lunch
         <Icon v-if="day.lunch" name="carbon:checkbox-checked-filled" class="text-green-500" size="1.5rem"/>
       </div>
-      <DayMeal :day="day" :meal="day.lunch ?? null" @addMeal="(mealTitle: string) => addMeal(MealType.Lunch, mealTitle)" />
+      <div ref="lunch" class="area">
+        <DayMeal :day="day" :meal="day.lunch ?? null" @addMeal="(mealTitle: string) => addMeal(MealType.Lunch, mealTitle)" />
+      </div>
     </div>
     <div class="my-3">
       <div class="my-2 font-bold text-primary text-lg flex justify-between items-center">
         Dinner
         <Icon v-if="day.dinner" name="carbon:checkbox-checked-filled" class="text-green-500" size="1.5rem"/>
       </div>
-      <DayMeal :day="day" :meal="day.dinner ?? null" @addMeal="(mealTitle: string) => addMeal(MealType.Dinner, mealTitle)" />
+      <div ref="dinner" class="area">
+        <DayMeal :day="day" :meal="day.dinner ?? null" @addMeal="(mealTitle: string) => addMeal(MealType.Dinner, mealTitle)" />
+      </div>
     </div>
   </div>
 </template>

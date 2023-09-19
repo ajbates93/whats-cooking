@@ -13,6 +13,7 @@ const calendarDays = computed(() => {
   })
 })
 
+// seed meals to simulate fetching data from DB
 onBeforeMount(() => store.seedMeals())
 
 </script>
