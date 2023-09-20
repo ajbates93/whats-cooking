@@ -41,44 +41,55 @@ onKeyStroke('Enter', () => {
 })
 
 const { x, y, isDragging } = dragMeal(drag)
-const { x: xBounding, y: yBounding } = getMealPositions(drag)
+const { x: xBounding, y: yBounding, left, right, bottom, top } = getMealPositions(drag)
 
-const isDropped = computed(() => {
-  const current = store.droppedValue
+const hasBeenDroppedOnto = computed(() => {
+  const droppedValue = store.droppedValue
+  const width = right.value - left.value
+  const center = width / 2
 
-  return (current.x >= xBounding.value - 20 && current.x <= xBounding.value + 20
-    && current.y >= yBounding.value - 20 && current.y <= yBounding.value + 20) 
+  const marginOfError = 50
+  return (droppedValue.x >= left.value - marginOfError && droppedValue.x <= right.value + marginOfError 
+  && droppedValue.y >= top.value - marginOfError && droppedValue.y <= bottom.value + marginOfError)
+})
+const hasBeenDragged = computed(() => {
+  const current = store.draggedValue
+  
 })
 
-watch(isDragging, () => {
-  if (isDragging && props.meal) {
+watch(isDragging, (newValue) => {
+  if (newValue && props.meal) {
     store.draggedMeal = props.meal
   }
 })
-watch(isDropped, () => {
-  if (isDropped.value && props.meal) {
+watch(hasBeenDroppedOnto, (newValue) => {
+  if (newValue && props.meal) {
+    console.log(`${props.meal.name} has been dropped onto!`)
     store.droppedMeal = props.meal
+    store.swapMeals(store.draggedMeal, store.droppedMeal) 
   }
-  store.swapMeals(store.draggedMeal, store.droppedMeal) 
 })
 
 </script>
 
 <template>
-  <div ref="drag" class="my-3 transition py-2 px-2 cursor-move rounded hover:shadow-lg border select-none touch-none bg-white"
-    :style="[isDragging ? `position: absolute; left: ${x.toFixed(0)}px; top: ${y.toFixed(0)}px;` : 'position: relative',
-            isDropped ? 'background-color: green' : '']">
-    <div v-if="meal" class="flex items-center justify-between">
-      <span v-if="!showEdit" class="mr-auto">{{ meal.name }} x: {{ x.toFixed(2) }}, y: {{ y.toFixed(2) }}</span>
-      <button v-if="!showEdit" class="bg-gray-400 text-white px-2 py-1 rounded" @click="showEdit = true">Change</button>
-      <input v-if="showEdit" class="bg-white border border-primary border-opacity-40 px-2 py-1 rounded" type="text" v-model="meal.name" />
-      <button v-if="showEdit" class="bg-gray-400 text-white px-2 py-1 rounded ml-auto mr-1" @click="showEdit = false">Cancel</button>
-      <button v-if="showEdit" class="bg-green-500 text-white px-2 py-1 rounded" @click="handleSubmitEditMealClick">Submit</button>
-    </div>
-    <div class="flex items-center justify-between" v-else>
-      <button v-if="!showInput" class="bg-gray-400 text-white px-2 py-1 rounded" @click="showInput = true">Add Meal</button>
-      <input v-if="showInput" class="bg-white px-2 py-1 border rounded border-primary border-opacity-40" type="text" v-model="newMealTitle" />
-      <button v-if="showInput" class="bg-green-500 text-white px-2 py-1 rounded" @click="handleSubmitNewMealClick">Submit</button>
+  <div :style="isDragging ? `height: ${drag?.clientHeight}px` : ''">
+
+    <div ref="drag" class="my-3 transition py-2 px-2 cursor-move rounded hover:shadow-lg border select-none touch-none bg-white w-auto animate-wiggle"
+      :class="[`left-[${xBounding.toFixed(2)}px] top-[${yBounding.toFixed(2)}]`, { 'bg-green-400 animate-wiggle': hasBeenDroppedOnto}]"
+      :style="[isDragging ? `position: absolute; left: ${x.toFixed(0)}px; top: ${y.toFixed(0)}px;` : '']">
+      <div v-if="meal" class="flex items-center justify-between">
+        <span v-if="!showEdit" class="mr-auto">{{ meal.name }} <span class="text-xs">{{ x.toFixed(2) }}, {{ y.toFixed(2) }}, isDragging: {{ isDragging }}</span></span>
+        <button v-if="!showEdit" class="bg-gray-400 text-white px-2 py-1 rounded" @click="showEdit = true">Change</button>
+        <input v-if="showEdit" class="bg-white border border-primary border-opacity-40 px-2 py-1 rounded" type="text" v-model="meal.name" />
+        <button v-if="showEdit" class="bg-gray-400 text-white px-2 py-1 rounded ml-auto mr-1" @click="showEdit = false">Cancel</button>
+        <button v-if="showEdit" class="bg-green-500 text-white px-2 py-1 rounded" @click="handleSubmitEditMealClick">Submit</button>
+      </div>
+      <div class="flex items-center justify-between" v-else>
+        <button v-if="!showInput" class="bg-gray-400 text-white px-2 py-1 rounded" @click="showInput = true">Add Meal</button>
+        <input v-if="showInput" class="bg-white px-2 py-1 border rounded border-primary border-opacity-40" type="text" v-model="newMealTitle" />
+        <button v-if="showInput" class="bg-green-500 text-white px-2 py-1 rounded" @click="handleSubmitNewMealClick">Submit</button>
+      </div>
     </div>
   </div>
 </template>

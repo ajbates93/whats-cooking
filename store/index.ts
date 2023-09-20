@@ -5,8 +5,9 @@ export const useStore = defineStore('store', {
     calendarDaysToShow: 5,
     meals: [] as Meal[],
     droppedValue: {} as XY,
-    draggedMeal: {} as Meal,
-    droppedMeal: {} as Meal
+    draggedValue: {} as XY,
+    droppedMeal: {} as Meal,
+    draggedMeal: {} as Meal
   }),
   getters: {
   },
@@ -22,15 +23,19 @@ export const useStore = defineStore('store', {
     swapMeals(draggedMeal: Meal, targetMeal: Meal) {
       const draggedIdx = this.meals.findIndex(x => x.date.toLocaleDateString() === draggedMeal.date.toLocaleDateString() && x.type === draggedMeal.type)
       const targetIdx = this.meals.findIndex(x => x.date.toLocaleDateString() === targetMeal.date.toLocaleDateString() && x.type === targetMeal.type)
-
-      if (draggedIdx === -1 || targetIdx === -1)
+      if (draggedIdx === -1 || targetIdx === -1 || draggedIdx === targetIdx)
         return
 
       const temp = JSON.parse(JSON.stringify(this.meals[draggedIdx]))
+      const tempDragged = JSON.parse(JSON.stringify(this.meals[targetIdx]))
+      const tempXY = JSON.parse(JSON.stringify(this.droppedValue))
       this.meals[draggedIdx].name = this.meals[targetIdx].name
       this.meals[draggedIdx].missingIngredients = this.meals[targetIdx].missingIngredients
       this.meals[targetIdx].name = temp.name
       this.meals[targetIdx].missingIngredients = temp.missingIngredients
+      this.draggedValue = this.droppedValue
+
+      console.log(`Meals swapped: ${temp.name} and ${tempDragged.name}`)
     },
     seedMeals() {
       const today = new Date()
