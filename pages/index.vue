@@ -34,6 +34,10 @@ onBeforeMount(() => store.seedMeals())
       <div class="grid grid-cols-3 gap-5">
         <DayCard v-for="day in calendarDays" :day-date="day" :day-title="day.toLocaleDateString('en-UK', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'})"></DayCard>
       </div>
+      <div class="py-2">
+        <div class="text-5xl font-bold mb-2">Shopping List</div>
+        <div v-for="item, idx in store.shoppingList">{{ item }}</div>
+      </div>
     </div>
   </div>
 </template>

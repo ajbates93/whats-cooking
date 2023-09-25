@@ -24,7 +24,7 @@ const handleSubmitMissingIngredientClick = () => {
 const handleRemoveMissingIngredientClick = (miIdx: number) => {
   const match = store.meals.find(x => x === meal)
   if (!match) throw Error("Could not find meal.")
-  match.missingIngredients?.splice(miIdx, 1)
+  match.missingIngredients.splice(miIdx, 1)
 }
 
 </script>

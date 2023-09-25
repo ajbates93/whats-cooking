@@ -10,7 +10,7 @@ export const useStore = defineStore('store', {
     draggedMeal: {} as Meal
   }),
   getters: {
-    getShoppingList(): string[] {
+    shoppingList(): string[] {
       return this.meals.flatMap(x => x.missingIngredients)
     }
   },

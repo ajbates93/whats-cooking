@@ -82,7 +82,7 @@ watch(hasBeenDroppedOnto, (newValue) => {
         <template v-if="!showEdit">
           <span class="mr-auto">{{ meal.name }}</span>
           <span class="flex items-stretch">
-            <LayoutActionButton class="bg-blue-500 flex items-center mr-2" @click="showMissingIngredientsForm = !showMissingIngredientsForm">
+            <LayoutActionButton class="!bg-blue-500 flex items-center mr-2" @click="showMissingIngredientsForm = !showMissingIngredientsForm">
               <Icon name="carbon:list-checked"></Icon>
             </LayoutActionButton>
             <LayoutActionButton class="bg-yellow-500" @click="showEdit = true">Change</LayoutActionButton>
