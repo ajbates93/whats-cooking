@@ -6,8 +6,5 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'nuxt-icon',
     '@pinia/nuxt'
-  ],
-  devServer: {
-    port: 3001
-  }
+  ]
 })
