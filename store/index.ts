@@ -10,6 +10,9 @@ export const useStore = defineStore('store', {
     draggedMeal: {} as Meal
   }),
   getters: {
+    getShoppingList(): string[] {
+      return this.meals.flatMap(x => x.missingIngredients)
+    }
   },
   actions: {
     addMeal(meal: Meal) {
@@ -44,15 +47,15 @@ export const useStore = defineStore('store', {
       tomorrow.setDate(today.getDate() + 1)
       dayAfterTomorrow.setDate(today.getDate() + 2)
 
-      this.addMeal({ type: MealType.Breakfast, name: "Granola", date: today })
-      this.addMeal({ type: MealType.Lunch, name: "Eggy Bread", date: today })
-      this.addMeal({ type: MealType.Dinner, name: "Fajitas", date: today })
-      this.addMeal({ type: MealType.Breakfast, name: "Granola", date: tomorrow })
-      this.addMeal({ type: MealType.Lunch, name: "Pasta Salad", date: tomorrow })
-      this.addMeal({ type: MealType.Dinner, name: "Tahini Salad", date: tomorrow })
-      this.addMeal({ type: MealType.Breakfast, name: "Smoothie", date: dayAfterTomorrow })
-      this.addMeal({ type: MealType.Lunch, name: "Veggie Wrap", date: dayAfterTomorrow })
-      this.addMeal({ type: MealType.Dinner, name: "Chili Con Carne", date: dayAfterTomorrow })
+      this.addMeal({ type: MealType.Breakfast, name: "Granola", date: today, missingIngredients: [] })
+      this.addMeal({ type: MealType.Lunch, name: "Eggy Bread", date: today, missingIngredients: [] })
+      this.addMeal({ type: MealType.Dinner, name: "Fajitas", date: today, missingIngredients: [] })
+      this.addMeal({ type: MealType.Breakfast, name: "Granola", date: tomorrow, missingIngredients: [] })
+      this.addMeal({ type: MealType.Lunch, name: "Pasta Salad", date: tomorrow, missingIngredients: [] })
+      this.addMeal({ type: MealType.Dinner, name: "Tahini Salad", date: tomorrow, missingIngredients: [] })
+      this.addMeal({ type: MealType.Breakfast, name: "Smoothie", date: dayAfterTomorrow, missingIngredients: [] })
+      this.addMeal({ type: MealType.Lunch, name: "Veggie Wrap", date: dayAfterTomorrow, missingIngredients: [] })
+      this.addMeal({ type: MealType.Dinner, name: "Chili Con Carne", date: dayAfterTomorrow, missingIngredients: [] })
       console.log('seed meals called')
     }
   }

@@ -17,7 +17,7 @@ onKeyStroke('Enter', () => {
 const handleSubmitMissingIngredientClick = () => {
   const match = store.meals.find(x => x === meal)
   if (!match) throw Error("Could not find meal.")
-  match.missingIngredients ? match.missingIngredients.push(input.value) : match.missingIngredients = [input.value]
+  match.missingIngredients.push(input.value)
   input.value = ''
 }
 

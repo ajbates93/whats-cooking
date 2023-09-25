@@ -11,7 +11,7 @@ export type Meal = {
   name: string,
   type: MealType,
   date: Date,
-  missingIngredients?: string[]
+  missingIngredients: string[]
 }
 export type Day = {
   id: number,
