@@ -41,6 +41,7 @@ export const useStore = defineStore('store', {
       console.log(`Meals swapped: ${temp.name} and ${tempDragged.name}`)
     },
     seedMeals() {
+      if (this.meals.length > 0) return
       const today = new Date()
       const tomorrow = new Date()
       const dayAfterTomorrow = new Date()
