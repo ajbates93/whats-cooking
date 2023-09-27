@@ -15,6 +15,9 @@ pnpm install
 
 # yarn
 yarn install
+
+# bun
+bun install
 ```
 
 ## Development Server
@@ -30,6 +33,9 @@ pnpm run dev
 
 # yarn
 yarn dev
+
+# bun
+bun run dev
 ```
 
 ## Production
