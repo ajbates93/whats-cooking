@@ -4,7 +4,7 @@
 
 <template>
   <Header /> 
-  <main role="main" class="p-10 bg-[#faf9f6] min-h-screen">
+  <main role="main" class="p-10 min-h-screen">
     <slot />
   </main>
 </template>
