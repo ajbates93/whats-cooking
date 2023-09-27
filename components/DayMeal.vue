@@ -75,12 +75,12 @@ watch(hasBeenDroppedOnto, (newValue) => {
 <template>
   <div class="my-3" :style="isDragging ? `height: ${drag?.clientHeight}px` : ''">
     <div
-      class="transition py-2 px-2 cursor-move rounded-t hover:shadow-lg border select-none touch-none bg-white w-auto animate-wiggle"
+      class="transition py-2 px-2 cursor-move rounded-t hover:shadow-lg border dark:border-[#555] select-none touch-none bg-white dark:bg-[#444] w-auto animate-wiggle"
       :class="[`left-[${xBounding.toFixed(2)}px] top-[${yBounding.toFixed(2)}]`, { 'bg-green-500 animate-wiggle': hasBeenDroppedOnto}]"
       :style="[isDragging ? `position: absolute; left: ${x.toFixed(0)}px; top: ${y.toFixed(0)}px;` : '']">
       <div v-if="meal" class="flex items-center justify-between">
         <template v-if="!showEdit">
-          <span class="mr-auto">{{ meal.name }}</span>
+          <span class="mr-auto dark:text-gray-300">{{ meal.name }}</span>
           <span class="flex items-stretch">
             <LayoutActionButton class="!bg-blue-500 flex items-center mr-2" @click="showMissingIngredientsForm = !showMissingIngredientsForm">
               <Icon name="carbon:list-checked"></Icon>
@@ -89,7 +89,7 @@ watch(hasBeenDroppedOnto, (newValue) => {
           </span>
         </template>
         <template v-else>
-          <input class="bg-white border border-primary border-opacity-40 px-2 py-1 rounded" type="text" v-model="meal.name" />
+          <input class="bg-white dark:bg-[#444] dark:text-gray-300 border border-primary dark:border-[#555] border-opacity-40 px-2 py-1 rounded" type="text" v-model="meal.name" />
           <LayoutActionButton class="ml-auto mr-1" @click="showEdit = false">Cancel</LayoutActionButton>
           <LayoutActionButton class="bg-green-500" @click="handleSubmitEditMealClick">Submit</LayoutActionButton>
         </template>
@@ -97,7 +97,7 @@ watch(hasBeenDroppedOnto, (newValue) => {
       <div v-else class="flex items-center justify-between" >
         <LayoutActionButton v-if="!showInput" @click="showInput = true">Add Meal</LayoutActionButton>
         <template v-else>
-          <input class="bg-white px-2 py-1 border rounded border-primary border-opacity-40" type="text" v-model="newMealTitle" />
+          <input class="bg-white dark:bg-[#444] dark:text-gray-300 px-2 py-1 border rounded border-primary dark:border-[#555] border-opacity-40" type="text" v-model="newMealTitle" />
           <LayoutActionButton class="bg-green-500" @click="handleSubmitNewMealClick">Submit</LayoutActionButton>
         </template>
       </div>

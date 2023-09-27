@@ -62,8 +62,12 @@ h5 {
   font-size: 1.75rem;
 }
 
-html, body {
+html {
   background-color: #faf9f6;
+
+  &.dark {
+    background-color: #222;
+  }
 }
 
 @layer hero {
@@ -72,5 +76,8 @@ html, body {
     background-image: radial-gradient(circle,#00817a,#004781);
     -webkit-background-clip: text;
     background-clip: text;
+  }
+  html.dark .hero-title {
+    background-image: radial-gradient(circle,#ff2024,#ff650f);
   }
 }

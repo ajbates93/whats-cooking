@@ -22,10 +22,10 @@ onBeforeMount(() => store.seedMeals())
   <div class="px-6">
     <div class="max-w-screen-xl mx-auto">
       <div class="flex justify-between items-center">
-        <div class="text-3xl font-bold text-primary">Meal Planner</div>
+        <div class="text-3xl font-bold text-primary dark:text-primary-dark">Meal Planner</div>
         <div class="my-5 font-bold text-lg">
-          <span class="mr-2">Days: </span>
-          <select v-model="store.calendarDaysToShow" class="px-3 py-2 border border-primary border-opacity-30 rounded-lg min-w-[100px]">
+          <span class="mr-2 text-gray-600 dark:text-gray-400">Days: </span>
+          <select v-model="store.calendarDaysToShow" class="px-3 py-2 dark:text-gray-300 dark:bg-[#444] border border-primary dark:border-[#555] border-opacity-30 rounded-lg min-w-[100px]">
             <option selected>5</option>
             <option>7</option>
             <option>10</option>

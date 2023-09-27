@@ -47,7 +47,8 @@ const addMeal = (mealType: MealType, mealTitle: string, date?: Date) => {
   const meal: Meal = {
     name: mealTitle,
     type: mealType,
-    date: date || dayDate
+    date: date || dayDate,
+    missingIngredients: []
   }
   store.addMeal(meal)
 }
@@ -58,13 +59,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="shadow rounded-lg p-5 bg-white border-2 border-primary border-opacity-30">
-    <div class="title text-xl font-bold mb-2 text-gray-700 flex justify-between items-center">
+  <div class="shadow rounded-lg p-5 bg-white dark:bg-[#333] border-2 border-primary dark:border-[#555] border-opacity-30">
+    <div class="title text-xl font-bold mb-2 text-gray-600 dark:text-gray-300 flex justify-between items-center">
       {{ dayTitle }}
       <Icon v-if="day.breakfast && day.lunch && day.dinner" name="carbon:checkbox-checked-filled" class="text-green-500" size="2rem" />
     </div>
     <div class="my-3">
-      <div class="my-2 font-bold text-primary text-lg flex justify-between items-center">
+      <div class="my-2 font-bold text-primary dark:text-primary-dark text-lg flex justify-between items-center">
         Breakfast
         <Icon v-if="day.breakfast" name="carbon:checkbox-checked-filled" class="text-green-500" size="1.5rem"/>
       </div>
@@ -73,7 +74,7 @@ onMounted(() => {
       </div>
     </div>
     <div class="my-3">
-      <div class="my-2 font-bold text-primary text-lg flex justify-between items-center">
+      <div class="my-2 font-bold text-primary dark:text-primary-dark text-lg flex justify-between items-center">
         Lunch
         <Icon v-if="day.lunch" name="carbon:checkbox-checked-filled" class="text-green-500" size="1.5rem"/>
       </div>
@@ -82,7 +83,7 @@ onMounted(() => {
       </div>
     </div>
     <div class="my-3">
-      <div class="my-2 font-bold text-primary text-lg flex justify-between items-center">
+      <div class="my-2 font-bold text-primary dark:text-primary-dark text-lg flex justify-between items-center">
         Dinner
         <Icon v-if="day.dinner" name="carbon:checkbox-checked-filled" class="text-green-500" size="1.5rem"/>
       </div>

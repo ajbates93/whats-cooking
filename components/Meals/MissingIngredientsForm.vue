@@ -30,16 +30,16 @@ const handleRemoveMissingIngredientClick = (miIdx: number) => {
 </script>
 
 <template>
-  <div class="p-2 rounded border border-t-none animate-wiggle bg-gray-100">
+  <div class="p-2 rounded rounded-t-none border border-t-none animate-wiggle bg-gray-100 dark:bg-[#353535] dark:border-[#555]">
     <ul v-if="meal.missingIngredients" class="pb-2">
       <li class="pb-1 flex items-center" v-for="mi, idx in meal.missingIngredients" :key="idx">
         <Icon class="text-gray-400" size="0.75rem" name="carbon:checkbox-indeterminate-filled"></Icon> 
-        <span class="ml-1">{{ mi }}</span>
-        <Icon name="carbon:close" class="text-gray-600 ml-auto" @click="handleRemoveMissingIngredientClick(idx)"></Icon>
+        <span class="ml-1 dark:text-gray-400">{{ mi }}</span>
+        <Icon name="carbon:close" class="text-gray-600 dark:text-gray-400 ml-auto" @click="handleRemoveMissingIngredientClick(idx)"></Icon>
       </li> 
     </ul>
     <div class="flex items-center gap-2">
-      <input class="border px-2 py-1 rounded w-full" v-model="input" placeholder="Missing ingredients..."/>
+      <input class="border dark:bg-[#444] dark:text-gray-300 dark:border-[#555] px-2 py-1 rounded w-full" v-model="input" placeholder="Missing ingredients..."/>
       <LayoutActionButton class="bg-green-500 hover:bg-green-600" @click="handleSubmitMissingIngredientClick">Add</LayoutActionButton>
     </div>
   </div>
