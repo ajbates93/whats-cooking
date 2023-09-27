@@ -2,6 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-display: swap;
+  font-family: Onest;
+  font-style: normal;
+  font-weight: 400;
+  src: url(/assets/fonts/OnestRegular1602-hint.woff) format("woff2")
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Onest;
+  font-style: normal;
+  font-weight: 300;
+  src: url(/assets/fonts/OnestLight1602-hint.woff) format("woff2")
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Onest;
+  font-style: normal;
+  font-weight: 500;
+  src: url(/assets/fonts/OnestMedium1602-hint.woff) format("woff2")
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Onest;
+  font-style: normal;
+  font-weight: 700;
+  src: url(/assets/fonts/OnestBold1602-hint.woff) format("woff2")
+}
+
 h1,
 h2,
 h3,
@@ -28,4 +60,13 @@ h4 {
 
 h5 {
   font-size: 1.75rem;
+}
+
+@layer hero {
+  .hero-title {
+    -webkit-text-fill-color: transparent;
+    background-image: radial-gradient(circle,#00817a,#004781);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
 }

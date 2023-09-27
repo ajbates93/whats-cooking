@@ -19,7 +19,7 @@ onBeforeMount(() => store.seedMeals())
 </script>
 
 <template>
-  <div class="px-10">
+  <div class="px-6">
     <div class="max-w-screen-xl mx-auto">
       <div class="flex justify-between items-center">
         <div class="text-3xl font-bold text-primary">Meal Planner</div>

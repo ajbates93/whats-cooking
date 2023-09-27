@@ -3,9 +3,13 @@ module.exports = {
   content: [],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Onest', 'sans-serif']
+      },
       colors: {
         'navGray': '#f9f9f9',
-        'primary': '#00817a'
+        'primary': '#00817a',
+        'darky': '#171716'
       },
       keyframes: {
         wiggle: {

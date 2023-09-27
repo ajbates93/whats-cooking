@@ -1,13 +1,8 @@
+<script setup lang="ts">
+  
+</script>
 <template>
-  <div>
-
+  <div class="max-w-screen-2xl">
+    <Hero />
   </div>
 </template>
-
-<script setup lang="ts">
-
-</script>
-
-<style scoped>
-
-</style>
