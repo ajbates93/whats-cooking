@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-import { MealType, type Meal, XY } from '@/types'
+import type { Meal, XY } from '@/types'
+import { MealType } from '@/types'
 export const useStore = defineStore('store', {
   state: () => ({
     calendarDaysToShow: 5,

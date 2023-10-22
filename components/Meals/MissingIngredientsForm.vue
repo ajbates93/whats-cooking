@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useStore } from '@/store';
 import { onKeyStroke } from '@vueuse/core'
-import { Meal } from '@/types';
+import type { Meal } from '@/types';
 const { meal } = defineProps<{
   meal: Meal,
 }>()

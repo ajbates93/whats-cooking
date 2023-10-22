@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useStore } from '@/store'
-import { Day, MealType, Meal } from '@/types'
+import type { Day, Meal } from '@/types'
+import { MealType } from '@/types'
 import draggable from 'vuedraggable'
 
 type Props = {
