@@ -20,3 +20,7 @@ export type Day = {
   lunch?: Meal,
   dinner?: Meal
 }
+export type MissingIngredient = {
+  ingredient: string,
+  meal: string
+}
