@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+const user = useSupabaseUser()
 </script>
 
 <template>
@@ -13,6 +13,15 @@
         <NuxtLink to="/shopping-list">
           <LayoutActionButton class="bg-primary dark:bg-primary-dark mr-1">Shopping List</LayoutActionButton>
         </NuxtLink>
+        <template v-if="user">
+          <NuxtLink to="/account">
+            <LayoutActionButton class="bg-primary dark:bg-primary-dark mr-1">Account</LayoutActionButton>
+          </NuxtLink>
+          <LayoutActionButton>Log Out</LayoutActionButton>
+        </template>
+        <template v-else>
+          <LayoutActionButton>Log In</LayoutActionButton>
+        </template>
       </div>
     </div>
   </header>
