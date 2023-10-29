@@ -1,44 +1,33 @@
 <template>
-  <form class="flex justify-center items-center" @submit.prevent="handleLogin">
+  <form class="flex justify-center items-center text-gray-600" @submit.prevent="handleLogin">
     <div class="max-w-screen-lg">
-      <h1>Log In</h1>
-      <p>Sign in via magic link with your email below</p>
-      <div>
-        <input 
-          v-model="email" 
-          type="email" 
-          placeholder="Your email" 
-          class="inputField" />
-      </div>
-      <div>
-        <input 
-          type="submit" 
-          class=""
-          :value="loading ? 'Loading' : 'Send magic link'"
-          :disabled="loading">
+      <h1 class="text-primary mb-5">Log In</h1>
+      <div class="flex flex-col gap-3">
+        <p>Sign in via magic link with your email below</p>
+        <div>
+          <input 
+            v-model="email" 
+            class="py-1 px-2 border rounded"
+            type="email" 
+            placeholder="Your email" />
+        </div>
+        <div>
+          <input 
+            type="submit" 
+            class="py-1 px-2 border rounded"
+            :value="loading ? 'Loading' : 'Send magic link'"
+            :disabled="loading">
+        </div>
       </div>
     </div> 
   </form>
 </template>
 
 <script lang="ts" setup>
-const supabase = useSupabaseClient()
+const { signIn, loading } = useAuth()
 
-const loading = ref(false)
 const email = ref('')
-
-const handleLogin = async () => {
-  try {
-    loading.value = true
-    const { error } = await supabase.auth.signInWithOtp({ email: email.value })
-    if (error) throw error
-    alert('Check your email for the login link!')
-  } catch (error) {
-    alert(error)
-  } finally {
-    loading.value = false
-  }
-}
+const handleLogin = async () => signIn(email.value)
 </script>
 
 <style>

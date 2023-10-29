@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const user = useSupabaseUser()
+const { user, signOut, signIn } = useAuth()
 </script>
 
 <template>
@@ -17,12 +17,15 @@ const user = useSupabaseUser()
           <NuxtLink to="/account">
             <LayoutActionButton class="bg-primary dark:bg-primary-dark mr-1">Account</LayoutActionButton>
           </NuxtLink>
-          <LayoutActionButton>Log Out</LayoutActionButton>
+          <LayoutActionButton @click="signOut">Log Out</LayoutActionButton>
         </template>
         <template v-else>
-          <LayoutActionButton>Log In</LayoutActionButton>
+          <NuxtLink to="/account">
+            <LayoutActionButton class="bg-primary dark:bg-primary-dark mr-1">Log In</LayoutActionButton>
+          </NuxtLink>
         </template>
       </div>
     </div>
   </header>
+  
 </template>
