@@ -29,6 +29,9 @@
       <template v-if="household">
         <div class="text-xl text-gray-600 pb-5">Household name: <span class="underline ml-2">{{ household.name }}</span></div>
         <div class="text-md bg-gray-400 py-1 px-2 rounded text-white inline-flex items-center"><Icon class="mr-2" size="1.25rem" name="carbon:information"></Icon> Add, edit or remove members of your household.</div>
+        <div v-if="householdUsers">
+          <div v-for="user in householdUsers">{{ user }}</div>
+        </div>
       </template>
       <template v-else>
         <LayoutActionButton @click="createHousehold('Bates-Lavelle')" class="bg-primary">Create Household</LayoutActionButton> 
@@ -41,13 +44,15 @@
 <script lang="ts" setup>
 
 const { user, updateProfile, fetchProfile, loading } = useAuth()
-const { createHousehold, fetchHouseholdForAdmin, loading: householdLoading } = useHousehold()
+const { createHousehold, fetchHouseholdForAdmin, fetchUsersForHousehold, loading: householdLoading } = useHousehold()
 
 const username = ref('')
 const avatar_path = ref('')
 
 const { data: profile } = await fetchProfile()
 const { data: household } = await fetchHouseholdForAdmin()
+if (household)
+  const { data: householdUsers } = await fetchUsersForHousehold(household.id)
 
 if (profile) {
   username.value = profile.username

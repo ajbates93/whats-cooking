@@ -34,5 +34,14 @@ export const useHousehold = () => {
     return { data } 
   }
 
-  return { createHousehold, fetchHouseholdForAdmin, loading }
+  const fetchUsersForHousehold = async (householdId: number) => {
+    const { data } = await supabase
+      .from('profiles')
+      .select('id, username, avatar_url')
+      .eq('household_id', householdId)
+
+    return { data }
+  }
+
+  return { createHousehold, fetchHouseholdForAdmin, fetchUsersForHousehold, loading }
 }
