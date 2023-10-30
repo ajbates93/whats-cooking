@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+const { user, signOut, signIn } = useAuth()
 </script>
 
 <template>
@@ -13,7 +13,19 @@
         <NuxtLink to="/shopping-list">
           <LayoutActionButton class="bg-primary dark:bg-primary-dark mr-1">Shopping List</LayoutActionButton>
         </NuxtLink>
+        <template v-if="user">
+          <NuxtLink to="/account">
+            <LayoutActionButton class="bg-primary dark:bg-primary-dark mr-1">Account</LayoutActionButton>
+          </NuxtLink>
+          <LayoutActionButton @click="signOut">Log Out</LayoutActionButton>
+        </template>
+        <template v-else>
+          <NuxtLink to="/account">
+            <LayoutActionButton class="bg-primary dark:bg-primary-dark mr-1">Log In</LayoutActionButton>
+          </NuxtLink>
+        </template>
       </div>
     </div>
   </header>
+  
 </template>
