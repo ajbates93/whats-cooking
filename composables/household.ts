@@ -1,10 +1,14 @@
 type Household = {
+  id: string;
+  name: string;
+  users: [];
 }
 
 export const useHousehold = () => {
   const supabase = useSupabaseClient()
-  const { user } = useAuth()
+  const { user, fetchProfile } = useAuth()
   const loading = ref(false)
+  
 
   const createHousehold = async (name: string) => {
     try {
@@ -25,12 +29,23 @@ export const useHousehold = () => {
     }
   } 
 
-  const fetchHouseholdForAdmin = async () => {
-    const { data } = await supabase
+  const fetchHousehold = async () => {
+    const { data: profile } = await fetchProfile()
+    const { data: household } = await supabase
       .from('households')
       .select('id, name')
-      .eq('admin_id', user.value?.id)
+      .eq('id', profile?.household_id)
       .single()
+    const { data: additionalusers } = await supabase
+      .from('profiles')
+      .select()
+      .eq('household_id', profile?.household_id)
+      
+    const h: Household = {
+      id: household?.id,
+      name: household?.name,
+      users: additionalusers,
+    }
     return { data } 
   }
 

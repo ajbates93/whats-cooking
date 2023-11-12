@@ -32,7 +32,7 @@ export const useAuth = () => {
   const fetchProfile = async () => {
     const { data } = await supabase
       .from('profiles')
-      .select('username, avatar_url')
+      .select('username, avatar_url, household_id')
       .eq('id', user.value?.id)
       .single()
 
