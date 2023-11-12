@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import Homepage from './index.vue'
 
-describe('Homepage', () => {
+describe('homepage', () => {
   const wrapper = mount(Homepage)
-  test('default number of days', () => {
+  it('default number of days', () => {
     expect(wrapper.vm.$refs.daysToShow).toBe(7)
   })
 
