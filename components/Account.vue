@@ -44,15 +44,14 @@
 <script lang="ts" setup>
 
 const { user, updateProfile, fetchProfile, loading } = useAuth()
-const { createHousehold, fetchHouseholdForAdmin, fetchUsersForHousehold, loading: householdLoading } = useHousehold()
+const { createHousehold, fetchHousehold, fetchUsersForHousehold, loading: householdLoading } = useHousehold()
 
 const username = ref('')
 const avatar_path = ref('')
 
 const { data: profile } = await fetchProfile()
-const { data: household } = await fetchHouseholdForAdmin()
-if (household)
-  const { data: householdUsers } = await fetchUsersForHousehold(household.id)
+const { data: household } = await fetchHousehold()
+const { data: householdUsers } = await fetchUsersForHousehold(household.id || 0)
 
 if (profile) {
   username.value = profile.username

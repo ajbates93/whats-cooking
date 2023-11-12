@@ -58,5 +58,5 @@ export const useHousehold = () => {
     return { data }
   }
 
-  return { createHousehold, fetchHouseholdForAdmin, fetchUsersForHousehold, loading }
+  return { createHousehold, fetchHousehold, fetchUsersForHousehold, loading }
 }
