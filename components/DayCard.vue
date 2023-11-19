@@ -24,7 +24,7 @@ const breakfast = ref<HTMLDivElement>()
 const lunch = ref<HTMLDivElement | null>(null)
 const dinner = ref<HTMLDivElement | null>(null)
 
-function findMealsForDay() {
+const findMealsForDay = () => {
   const meals = store.meals.filter(x => x.date.toLocaleDateString() === dayDate.toLocaleDateString())
   if (meals.length > 0) {
     meals.forEach((x, idx) => {
@@ -44,7 +44,7 @@ function findMealsForDay() {
     })
   }
 }
-function addMeal(mealType: MealType, mealTitle: string, date?: Date) {
+const addMeal = (mealType: MealType, mealTitle: string, date?: Date) => {
   const meal: Meal = {
     name: mealTitle,
     type: mealType,

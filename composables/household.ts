@@ -4,7 +4,7 @@ interface Household {
   users: []
 }
 
-export function useHousehold() {
+export const useHousehold = () => {
   const supabase = useSupabaseClient()
   const { user, fetchProfile } = useAuth()
   const loading = ref(false)

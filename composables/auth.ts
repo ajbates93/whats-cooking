@@ -1,4 +1,4 @@
-export function useAuth() {
+export const useAuth = () => {
   const supabase = useSupabaseClient()
   const user = useSupabaseUser()
   const loading = ref(false)

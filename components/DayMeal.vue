@@ -23,12 +23,12 @@ const showMissingIngredientsForm = ref(false)
 
 const newMealTitle = ref('')
 
-function handleSubmitNewMealClick() {
+const handleSubmitNewMealClick = () => {
   showInput.value = showEdit.value = false
   emit('addMeal', newMealTitle.value)
 }
 
-function handleSubmitEditMealClick() {
+const handleSubmitEditMealClick = () => {
   if (props.meal && props.meal.name) {
     showInput.value = showEdit.value = false
     emit('addMeal', props.meal.name)
