@@ -1,26 +1,26 @@
 export enum MealType {
   Breakfast,
   Lunch,
-  Dinner
+  Dinner,
 }
-export type XY = {
-  x: number,
+export interface XY {
+  x: number
   y: number
 }
-export type Meal = {
-  name: string,
-  type: MealType,
-  date: Date,
+export interface Meal {
+  name: string
+  type: MealType
+  date: Date
   missingIngredients: string[]
 }
-export type Day = {
-  id: number,
-  date: Date,
-  breakfast?: Meal,
-  lunch?: Meal,
+export interface Day {
+  id: number
+  date: Date
+  breakfast?: Meal
+  lunch?: Meal
   dinner?: Meal
 }
-export type MissingIngredient = {
-  ingredient: string,
+export interface MissingIngredient {
+  ingredient: string
   meal: string
 }

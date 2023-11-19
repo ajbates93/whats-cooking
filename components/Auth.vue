@@ -1,25 +1,29 @@
 <template>
   <form class="flex justify-center items-center text-gray-600" @submit.prevent="handleLogin">
     <div class="max-w-screen-lg">
-      <h1 class="text-primary mb-5">Log In</h1>
+      <h1 class="text-primary mb-5">
+        Log In
+      </h1>
       <div class="flex flex-col gap-3">
         <p>Sign in via magic link with your email below</p>
         <div>
-          <input 
-            v-model="email" 
+          <input
+            v-model="email"
             class="py-1 px-2 border rounded"
-            type="email" 
-            placeholder="Your email" />
+            type="email"
+            placeholder="Your email"
+          >
         </div>
         <div>
-          <input 
-            type="submit" 
+          <input
+            type="submit"
             class="py-1 px-2 border rounded"
             :value="loading ? 'Loading' : 'Send magic link'"
-            :disabled="loading">
+            :disabled="loading"
+          >
         </div>
       </div>
-    </div> 
+    </div>
   </form>
 </template>
 
@@ -33,4 +37,3 @@ const handleLogin = async () => signIn(email.value)
 <style>
 
 </style>
-

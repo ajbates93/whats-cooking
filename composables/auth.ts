@@ -1,17 +1,20 @@
-export const useAuth = () => {
+export function useAuth() {
   const supabase = useSupabaseClient()
   const user = useSupabaseUser()
   const loading = ref(false)
-  
+
   const signIn = async (email: string) => {
     try {
       loading.value = true
-      const { error } = await supabase.auth.signInWithOtp({ email: email })
-      if (error) throw error
+      const { error } = await supabase.auth.signInWithOtp({ email })
+      if (error)
+        throw error
       alert('Check your email for the login link!')
-    } catch (error) {
+    }
+    catch (error) {
       alert(error)
-    } finally {
+    }
+    finally {
       loading.value = false
     }
   }
@@ -20,12 +23,15 @@ export const useAuth = () => {
     try {
       loading.value = true
       const { error } = await supabase.auth.signOut()
-      if (error) throw error 
+      if (error)
+        throw error
       user.value = null
-    } catch (error) {
+    }
+    catch (error) {
       alert(error)
-    } finally {
-      loading.value = false 
+    }
+    finally {
+      loading.value = false
     }
   }
 
@@ -36,7 +42,7 @@ export const useAuth = () => {
       .eq('id', user.value?.id)
       .single()
 
-    return { data } 
+    return { data }
   }
 
   const updateProfile = async (username: string, avatar_path: string) => {
@@ -46,21 +52,24 @@ export const useAuth = () => {
 
       const updates = {
         id: user.value?.id,
-        username: username,
+        username,
         avatar_url: avatar_path,
-        updated_at: new Date()
+        updated_at: new Date(),
       }
 
       const { error } = await supabase.from('profiles').upsert(updates, {
-        returning: 'minimal'
+        returning: 'minimal',
       })
-      if (error) throw error
-    } catch (error) {
+      if (error)
+        throw error
+    }
+    catch (error) {
       alert(error)
-    } finally {
+    }
+    finally {
       loading.value = false
     }
   }
-  
+
   return { user, signIn, signOut, fetchProfile, updateProfile, loading }
 }

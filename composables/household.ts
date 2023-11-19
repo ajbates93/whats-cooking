@@ -1,33 +1,35 @@
-type Household = {
-  id: string;
-  name: string;
-  users: [];
+interface Household {
+  id: string
+  name: string
+  users: []
 }
 
-export const useHousehold = () => {
+export function useHousehold() {
   const supabase = useSupabaseClient()
   const { user, fetchProfile } = useAuth()
   const loading = ref(false)
-  
 
   const createHousehold = async (name: string) => {
     try {
-      if (!user.value) return;
+      if (!user.value)
+        return
       const household = {
         created_by: user.value.id,
         admin_id: user.value.id,
-        name: name
+        name,
       }
       loading.value = true
       const { error } = await supabase
         .from('households')
         .insert(household)
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error)
-    } finally {
+    }
+    finally {
       loading.value = false
     }
-  } 
+  }
 
   const fetchHousehold = async () => {
     const { data: profile } = await fetchProfile()
@@ -40,13 +42,13 @@ export const useHousehold = () => {
       .from('profiles')
       .select()
       .eq('household_id', profile?.household_id)
-      
+
     const h: Household = {
       id: household?.id,
       name: household?.name,
       users: additionalusers,
     }
-    return { data } 
+    return { data }
   }
 
   const fetchUsersForHousehold = async (householdId: number) => {

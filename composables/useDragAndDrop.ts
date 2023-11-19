@@ -1,8 +1,8 @@
-import { useDraggable, useElementBounding } from "@vueuse/core"
-import { XY } from "~/types"
-import { useStore } from "~/store"
+import { useDraggable, useElementBounding } from '@vueuse/core'
+import type { XY } from '~/types'
+import { useStore } from '~/store'
 
-export const useDragAndDrop = () => {
+export function useDragAndDrop() {
   const store = useStore()
   const dragMeal = (meal: Ref<HTMLElement | null>) => {
     const onEnd = (xy: XY) => {
@@ -14,7 +14,7 @@ export const useDragAndDrop = () => {
       onEnd: () => {
         const xy: XY = { x: x.value, y: y.value }
         onEnd(xy)
-      }
+      },
     })
     return { x, y, isDragging }
   }

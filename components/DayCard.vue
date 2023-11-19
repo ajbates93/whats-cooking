@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import draggable from 'vuedraggable'
 import { useStore } from '@/store'
 import type { Day, Meal } from '@/types'
 import { MealType } from '@/types'
-import draggable from 'vuedraggable'
 
-type Props = {
-  dayTitle: string,
+interface Props {
+  dayTitle: string
   dayDate: Date
 }
 
@@ -18,38 +18,38 @@ const day = reactive<Day>({
   date: dayDate,
   breakfast: undefined,
   lunch: undefined,
-  dinner: undefined
+  dinner: undefined,
 })
 const breakfast = ref<HTMLDivElement>()
 const lunch = ref<HTMLDivElement | null>(null)
 const dinner = ref<HTMLDivElement | null>(null)
 
-const findMealsForDay = () => {
-  const meals = store.meals.filter(x => x.date.toLocaleDateString() === dayDate.toLocaleDateString()) 
+function findMealsForDay() {
+  const meals = store.meals.filter(x => x.date.toLocaleDateString() === dayDate.toLocaleDateString())
   if (meals.length > 0) {
     meals.forEach((x, idx) => {
       switch (x.type) {
         case MealType.Breakfast:
           day.breakfast = x
-          break;
+          break
         case MealType.Lunch:
           day.lunch = x
-          break;
+          break
         case MealType.Dinner:
           day.dinner = x
-          break;
+          break
         default:
-          break;
+          break
       }
     })
   }
 }
-const addMeal = (mealType: MealType, mealTitle: string, date?: Date) => {
+function addMeal(mealType: MealType, mealTitle: string, date?: Date) {
   const meal: Meal = {
     name: mealTitle,
     type: mealType,
     date: date || dayDate,
-    missingIngredients: []
+    missingIngredients: [],
   }
   store.addMeal(meal)
 }
@@ -68,7 +68,7 @@ onMounted(() => {
     <div class="my-3">
       <div class="my-2 font-bold text-primary dark:text-primary-dark text-lg flex justify-between items-center">
         Breakfast
-        <Icon v-if="day.breakfast" name="carbon:checkbox-checked-filled" class="text-green-500" size="1.5rem"/>
+        <Icon v-if="day.breakfast" name="carbon:checkbox-checked-filled" class="text-green-500" size="1.5rem" />
       </div>
       <div ref="breakfast" class="area">
         <DayMeal :day="day" :meal="day.breakfast ?? null" @addMeal="(mealTitle: string) => addMeal(MealType.Breakfast, mealTitle)" />
@@ -77,7 +77,7 @@ onMounted(() => {
     <div class="my-3">
       <div class="my-2 font-bold text-primary dark:text-primary-dark text-lg flex justify-between items-center">
         Lunch
-        <Icon v-if="day.lunch" name="carbon:checkbox-checked-filled" class="text-green-500" size="1.5rem"/>
+        <Icon v-if="day.lunch" name="carbon:checkbox-checked-filled" class="text-green-500" size="1.5rem" />
       </div>
       <div ref="lunch" class="area">
         <DayMeal :day="day" :meal="day.lunch ?? null" @addMeal="(mealTitle: string) => addMeal(MealType.Lunch, mealTitle)" />
@@ -86,7 +86,7 @@ onMounted(() => {
     <div class="my-3">
       <div class="my-2 font-bold text-primary dark:text-primary-dark text-lg flex justify-between items-center">
         Dinner
-        <Icon v-if="day.dinner" name="carbon:checkbox-checked-filled" class="text-green-500" size="1.5rem"/>
+        <Icon v-if="day.dinner" name="carbon:checkbox-checked-filled" class="text-green-500" size="1.5rem" />
       </div>
       <div ref="dinner" class="area">
         <DayMeal :day="day" :meal="day.dinner ?? null" @addMeal="(mealTitle: string) => addMeal(MealType.Dinner, mealTitle)" />
