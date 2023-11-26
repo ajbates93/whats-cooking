@@ -1,11 +1,5 @@
-interface Household {
-  id: string
-  name: string
-  users: []
-}
-
 export const useHousehold = () => {
-  const supabase = useSupabaseClient()
+  const { supabase } = useDatabase()
   const { user, fetchProfile } = useAuth()
   const loading = ref(false)
 
@@ -32,23 +26,34 @@ export const useHousehold = () => {
   }
 
   const fetchHousehold = async () => {
-    const { data: profile } = await fetchProfile()
-    const { data: household } = await supabase
-      .from('households')
-      .select('id, name')
-      .eq('id', profile?.household_id)
-      .single()
-    const { data: additionalusers } = await supabase
-      .from('profiles')
-      .select()
-      .eq('household_id', profile?.household_id)
+    try {
+      const { data: profile } = await fetchProfile()
+      const household_id = profile?.household_id;
 
-    const h: Household = {
-      id: household?.id,
-      name: household?.name,
-      users: additionalusers,
+      if (!household_id)
+        throw new Error('No household_id field.')
+
+      const { data: household } = await supabase
+        .from('households')
+        .select('id, name')
+        .eq('id', profile?.household_id!)
+        .single()
+      const { data: additionalUsers } = await supabase
+        .from('profiles')
+        .select()
+        .eq('household_id', profile?.household_id!)
+  
+      if (!household || !additionalUsers)
+        throw new Error('No household or additional users found.')
+      const data = {
+        id: household?.id!,
+        name: household?.name!,
+        users: additionalUsers,
+      }
+      return data
+    } catch (error) {
+      console.error(error)
     }
-    return { data }
   }
 
   const fetchUsersForHousehold = async (householdId: number) => {

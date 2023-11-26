@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5">
+  <div class="px-5" v-if="user">
     <h1 class="flex items-center">
       <span class="text-gray-600">Account</span>
       <Icon class="text-primary ml-5" name="carbon:home" />
@@ -68,13 +68,11 @@ const username = ref('')
 const avatar_path = ref('')
 
 const { data: profile } = await fetchProfile()
-const { data: household } = await fetchHousehold()
-const { data: householdUsers } = await fetchUsersForHousehold(household.id || 0)
+const household = await fetchHousehold()
+const { data: householdUsers } = await fetchUsersForHousehold(household?.id || 0)
 
-if (profile) {
-  username.value = profile.username
-  avatar_path.value = profile.avatar_url
-}
+username.value = profile?.username || ''
+avatar_path.value = profile?.avatar_url || ''
 
 const handleUpdateProfileSubmit = () => updateProfile(username.value, avatar_path.value)
 </script>

@@ -1,5 +1,6 @@
+import type { Database } from "~/database.types"
 export const useAuth = () => {
-  const supabase = useSupabaseClient()
+  const { supabase } = useDatabase() 
   const user = useSupabaseUser()
   const loading = ref(false)
 
@@ -39,7 +40,7 @@ export const useAuth = () => {
     const { data } = await supabase
       .from('profiles')
       .select('username, avatar_url, household_id')
-      .eq('id', user.value?.id)
+      .eq('id', user.value!.id)
       .single()
 
     return { data }
@@ -48,18 +49,21 @@ export const useAuth = () => {
   const updateProfile = async (username: string, avatar_path: string) => {
     try {
       loading.value = true
-      const user = useSupabaseUser()
 
+      if (!user.value) throw new Error('No user')
+
+      const now = new Date()
       const updates = {
-        id: user.value?.id,
+        id: user.value.id,
         username,
         avatar_url: avatar_path,
-        updated_at: new Date(),
+        updated_at: now.toDateString(),
       }
 
-      const { error } = await supabase.from('profiles').upsert(updates, {
-        returning: 'minimal',
-      })
+      const { error } = await supabase.from('profiles').update(updates)
+      // const { error } = await supabase.from('profiles').upsert(updates, {
+      //   returning: 'minimal',
+      // })
       if (error)
         throw error
     }
