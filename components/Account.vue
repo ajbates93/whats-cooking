@@ -41,18 +41,20 @@
         <div class="text-xl text-gray-600 pb-5">
           Household name: <span class="underline ml-2">{{ household.name }}</span>
         </div>
-        <div class="text-md bg-gray-400 py-1 px-2 rounded text-white inline-flex items-center">
+        <div class="text-md bg-gray-400 py-1 px-2 mb-5 rounded text-white inline-flex items-center">
           <Icon class="mr-2" size="1.25rem" name="carbon:information" /> Add, edit or remove members of your
           household.
         </div>
         <div v-if="householdUsers">
           <div v-for="user in householdUsers">
-            {{ user }}
+            <div>User ID: {{ user.id }}</div>
+            <div>Username: {{ user.username }}</div>
           </div>
         </div>
       </template>
       <template v-else>
-        <LayoutActionButton class="bg-primary" @click="createHousehold('Bates-Lavelle')">
+        <div class="mb-5">Looks like you haven't created your household yet. Use the button below to start sharing your plans and shopping lists with others in your household.</div>
+        <LayoutActionButton class="bg-primary inline-block" @click="createHousehold('Bates-Lavelle')">
           Create Household
         </LayoutActionButton>
       </template>

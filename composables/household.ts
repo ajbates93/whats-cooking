@@ -13,12 +13,22 @@ export const useHousehold = () => {
         name,
       }
       loading.value = true
-      const { error } = await supabase
+      const { data, error: householdError } = await supabase
         .from('households')
         .insert(household)
+        .select('id')
+
+      if (!data) return;
+
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({
+          household_id: data[0].id
+        })
+        .eq('id', user.value.id)
     }
-    catch (error) {
-      console.error(error)
+    catch (householdError) {
+      console.error(householdError)
     }
     finally {
       loading.value = false
