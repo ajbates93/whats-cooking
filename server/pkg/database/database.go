@@ -3,6 +3,7 @@ package database
 import (
 	"fmt"
 	"os"
+	"whats-cooking/pkg/model"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -31,7 +32,12 @@ func InitDB() {
 
 func MigrateDB() {
 	e = database.AutoMigrate(
-	// List all models here
+		// List all models here
+		&model.User{},
+		&model.Day{},
+		&model.Meal{},
+		&model.Ingredient{},
+		&model.ShoppingList{},
 	)
 	if e != nil {
 		panic(e)

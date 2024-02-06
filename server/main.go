@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"whats-cooking/pkg/database"
+	"whats-cooking/pkg/router"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
@@ -34,9 +35,7 @@ func main() {
 	e := echo.New()
 
 	// Build routes...
-	e.GET(("/"), func(e echo.Context) error {
-		return e.String(200, "Hello world!")
-	})
+	router.NewRouter(e)
 
 	fmt.Println("Starting Server...")
 	e.Logger.Fatal(e.Start(":8080"))
