@@ -13,7 +13,12 @@ func NewRouter(e *echo.Echo) {
 		})
 	})
 
+	// Auth
+	e.POST("/signin", handler.SignIn)
+
 	// Users
+	e.GET("/users", handler.GetUsers)
+	e.GET("/users/:id", handler.GetUserByID)
 	e.POST("/users", handler.CreateUser)
 
 	// Meals
