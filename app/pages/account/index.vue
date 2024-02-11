@@ -6,7 +6,8 @@
 </template>
 
 <script lang="ts" setup>
-const user = useSupabaseUser()
+// const user = useSupabaseUser()
+const user = true
 </script>
 
 <style>

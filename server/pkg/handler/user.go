@@ -62,6 +62,7 @@ func CreateUser(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, data)
 	}
 
+	// Create the user
 	if res := db.Create(&u); res.Error != nil {
 		data := map[string]interface{}{
 			"message": res.Error.Error(),

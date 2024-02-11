@@ -7,11 +7,7 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
-    '@nuxtjs/supabase'
   ],
-  supabase: {
-    redirect: false
-  },
   colorMode: {
     classSuffix: ''
   }

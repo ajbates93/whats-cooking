@@ -6,16 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func NewRouter(e *echo.Echo) {
-	e.GET(("/"), func(c echo.Context) error {
-		return c.JSON(200, map[string]interface{}{
-			"message": "Hello, World!",
-		})
-	})
-
-	// Auth
-	e.POST("/signin", handler.SignIn)
-
+func NewRouter(e *echo.Group) {
 	// Users
 	e.GET("/users", handler.GetUsers)
 	e.GET("/users/:id", handler.GetUserByID)

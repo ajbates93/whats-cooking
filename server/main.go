@@ -5,6 +5,7 @@ import (
 	"log"
 	"whats-cooking/pkg/auth"
 	"whats-cooking/pkg/database"
+	"whats-cooking/pkg/handler"
 	"whats-cooking/pkg/router"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -38,6 +39,10 @@ func main() {
 	fmt.Println("Building server...")
 	e := echo.New()
 
+	// Auth
+	e.POST("/auth/signin", handler.SignIn)
+
+	protected := e.Group("/api")
 	// Middleware
 	e.Use(middleware.Logger())
 	config := echojwt.Config{
@@ -45,10 +50,10 @@ func main() {
 		SigningKey:    []byte(auth.GetJWTSecret()),
 		TokenLookup:   "cookie:access-token",
 	}
-	e.Use(echojwt.WithConfig(config))
+	protected.Use(echojwt.WithConfig(config))
 
 	// Build routes...
-	router.NewRouter(e)
+	router.NewRouter(protected)
 
 	fmt.Println("Starting Server...")
 	e.Logger.Fatal(e.Start(":8080"))
